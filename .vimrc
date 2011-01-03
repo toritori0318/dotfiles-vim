@@ -96,12 +96,16 @@ function! Capture(cmd, ...)
 endfunction
 " }}}
 
+" uniteのチートシート表示
+nnoremap <silent> ,uc :<C-u>Capture map unite<CR>
+
 
 "-------------------------------------------------------------------------------
 " env
 "-------------------------------------------------------------------------------
 let $PATH="/opt/local/bin:".$PATH
 let $PATH=$HOME."/perl5/perlbrew/bin:".$PATH
+
 
 "-------------------------------------------------------------------------------
 " ステータスライン StatusLine
@@ -189,7 +193,7 @@ function! InsertTabWrapper()
     return "\<c-x>\<c-o>"
   endif
 endfunction
-inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+nnoremap <tab> InsertTabWrapper()
 
 
 "-------------------------------------------------------------------------------
@@ -301,23 +305,6 @@ hi PmenuSbar ctermbg=0 ctermfg=9
 "-------------------------------------------------------------------------------
 " カラー関連 Colors
 "-------------------------------------------------------------------------------
-
-" ターミナルタイプによるカラー設定
-if &term =~ "xterm-debian" || &term =~ "xterm-xfree86" || &term =~ "xterm-256color"
- set t_Co=16
- set t_Sf=[3%dm
- set t_Sb=[4%dm
-elseif &term =~ "xterm-color"
- set t_Co=8
- set t_Sf=[3%dm
- set t_Sb=[4%dm
-endif
-
-"ポップアップメニューのカラーを設定
-"hi Pmenu guibg=#666666
-"hi PmenuSel guibg=#8cd0d3 guifg=#666666
-"hi PmenuSbar guibg=#333333
-
 " ハイライト on
 syntax enable
 
@@ -325,7 +312,6 @@ syntax enable
 hi Pmenu ctermbg=white ctermfg=darkgray
 hi PmenuSel ctermbg=blue ctermfg=white
 hi PmenuSbar ctermbg=0 ctermfg=9
-
 
 
 
@@ -342,7 +328,7 @@ inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
 " Tabキーを空白に変換
 set expandtab
 
-" ビジュアルモードで選択肢た結果を囲む
+" ビジュアルモードで選択した結果を囲む
 vnoremap { "zdi{<C-R>z}<ESC>
 vnoremap [ "zdi[<C-R>z]<ESC>
 vnoremap ( "zdi(<C-R>z)<ESC>
