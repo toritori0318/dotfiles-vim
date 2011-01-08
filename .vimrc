@@ -18,6 +18,7 @@ set showmode " 現在のモードを表示
 set viminfo='50,<1000,s100,\"50 " viminfoファイルの設定
 set modelines=0 " モードラインは無効
 set title       "タイトルを表示
+set shell=/bin/bash " シェル指定
 
 " perl用
 autocmd FileType perl set isfname-=-
@@ -98,6 +99,11 @@ endfunction
 
 " uniteのチートシート表示
 nnoremap <silent> ,uc :<C-u>Capture map unite<CR>
+
+" vim diff shortcut
+function VD(trn) 
+    call vertical diffsplit trn
+endfunction
 
 
 "-------------------------------------------------------------------------------
@@ -218,10 +224,11 @@ set noignorecase " 大文字小文字無視しない
 set incsearch " インクリメンタルサーチ
 set hlsearch " 検索文字をハイライト
 
+
 "選択した文字列を検索
-vnoremap <silent> // y/<C-R>=escape(@", '\\/.*$^~[]')<CR><CR>
+vnoremap * y/<C-R>=escape(@", '\\/.*$^~[]')<CR><CR>
 "選択した文字列を置換
-vnoremap /r "xy;%s/<C-R>=escape(@x, '\\/.*$^~[]')<CR>//gc<Left><Left><Left>
+vnoremap ,* "xy;%s/<C-R>=escape(@x, '\\/.*$^~[]')<CR>//gc<Left><Left><Left>
 
 "s*置換後文字列/g<Cr>でカーソル下のキーワードを置換
 nnoremap <expr> s* ':%substitute/\<' . expand('<cword>') . '\>/'
@@ -345,14 +352,14 @@ map <A-a>  ggvG
 vnoremap <A-x> "+x
 " クリップボードコピー／貼り付け
 vnoremap <A-c> "+y
-map <A-v>		"+gP
-map <S-Insert>		"+gP
-cmap <A-v>		<C-R>+
-cmap <S-Insert>		<C-R>+
+map <A-v>       "+gP
+map <S-Insert>      "+gP
+cmap <A-v>      <C-R>+
+cmap <S-Insert>     <C-R>+
 exe 'inoremap <script> <A-v>' paste#paste_cmd['i']
 exe 'vnoremap <script> <A-v>' paste#paste_cmd['v']
-imap <S-Insert>		<A-v>
-vmap <S-Insert>		<A-v>
+imap <S-Insert>     <A-v>
+vmap <S-Insert>     <A-v>
 
 
 
@@ -434,4 +441,5 @@ function! s:unite_my_settings()"{{{
 endfunction"}}}
 
 let g:unite_source_file_mru_limit = 200
+
 
